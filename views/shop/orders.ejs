@@ -1,0 +1,41 @@
+<%- include('../includes/header') %>
+</head>
+<body>
+<%- include('../includes/navigation') %>
+    <main>
+        <%
+            if (orders.length) {
+                %>
+            <ul>
+                <%
+                    orders.forEach(order => {
+                        %>
+                        <li>
+                            <h1><%= order.id %></h1>
+                            <ul>
+                                <%
+                                    order.products.forEach(item => {
+                                        %>
+                                    <li>
+                                        <%= item.title%> (<%= item.orderItems.quantity%>)
+                                    </li>
+                                <%
+                                    })
+
+                                %>
+                            </ul>
+                        </li>
+                <%
+                    })
+                %>
+            </ul>
+        <%
+            } else {
+                %>
+            <h1>Nothing</h1>
+        <%
+            }
+
+        %>
+    </main>
+<%- include('../includes/footer') %>
