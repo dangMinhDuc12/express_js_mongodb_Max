@@ -11,11 +11,11 @@ router.post('/add-product', adminController.addProduct)
 // /admin/products => GET
 router.get('/products', adminController.getProducts)
 //
-// router.get('/edit-product/:productId', adminController.getEditProduct)
+router.get('/edit-product/:productId', adminController.getEditProduct)
 //
-// router.delete('/delete-product/:productId', adminController.deleteProduct)
+router.delete('/delete-product/:productId', adminController.deleteProduct)
 //
-// router.put('/edit-product/:productId', adminController.updateProduct)
+router.put('/edit-product/:productId', adminController.updateProduct)
 
 
 

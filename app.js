@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const methodOverride = require('method-override')
 const mongoConnect= require('./ulti/database').mongoConnect
+const User = require('./models/user')
+const { ObjectId } = require('mongodb')
 
 //Routes
 const adminRoutes = require('./routes/admin')
@@ -17,16 +19,12 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, 'public')))
 
-//Taọ middleware để mọi request tương ứng với user hiện tại
-// app.use(async (req, res, next) => {
-//     const userFind = await User.findAll({
-//         where: {
-//             id: 1
-//         }
-//     })
-//     req.user = userFind[0]
-//     next()
-// })
+// Taọ middleware để mọi request tương ứng với user hiện tại
+app.use(async (req, res, next) => {
+    const userFind = await User.findById('612e13dcff73b1aae3ccfbf9')
+    req.user = new User(userFind.name, userFind.email, userFind.cart, userFind._id)
+    next()
+})
 
 app.use('/admin',adminRoutes)
 app.use(shopRoutes)
@@ -39,7 +37,12 @@ app.use((req, res, next) => {
 })
 
 ;(async () => {
-   const client = await mongoConnect()
-    console.log(client)
-    app.listen(3000)
+    try {
+        const client = await mongoConnect()
+        console.log('connected to db')
+        app.listen(3000)
+    } catch (e) {
+        console.log(e)
+    }
+
 })()

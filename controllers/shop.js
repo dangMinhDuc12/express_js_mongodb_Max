@@ -73,39 +73,41 @@ exports.getIndex = async (req, res, next) => {
 //     })
 // }
 //
-// exports.postCart = async (req, res, next) => {
-//     const productId = req.body.productId
-//     // Product.findById(productId, (product) => {
-//     //     Cart.addProduct(productId, product.price)
-//     // })
-//
-//     //SQL
-//     let fetchedCart = null
-//     const cart = await req.user.getCart()
-//     fetchedCart = cart
-//     const products = await cart.getProducts({
-//         where: {
-//             id: productId
-//         }
-//     })
-//     let product = null
-//     if (products.length) {
-//         product = products[0]
-//     }
-//     let newQuantity = 1
-//     if (product) {
-//         const oldQuantity = product.cartItems.quantity
-//         newQuantity = oldQuantity + 1
-//         await fetchedCart.addProduct(product, { through: { quantity: newQuantity } })
-//     }
-//     const productFind = await Product.findAll({
-//         where: {
-//             id: productId
-//         }
-//     })
-//     await fetchedCart.addProduct(productFind[0], { through: { quantity: newQuantity } })
-//     res.redirect('/cart')
-// }
+exports.postCart = async (req, res, next) => {
+    const productId = req.body.productId
+    const product = await Product.findById(productId)
+    await req.user.addToCart(product)
+    // // Product.findById(productId, (product) => {
+    // //     Cart.addProduct(productId, product.price)
+    // // })
+    //
+    // //SQL
+    // let fetchedCart = null
+    // const cart = await req.user.getCart()
+    // fetchedCart = cart
+    // const products = await cart.getProducts({
+    //     where: {
+    //         id: productId
+    //     }
+    // })
+    // let product = null
+    // if (products.length) {
+    //     product = products[0]
+    // }
+    // let newQuantity = 1
+    // if (product) {
+    //     const oldQuantity = product.cartItems.quantity
+    //     newQuantity = oldQuantity + 1
+    //     await fetchedCart.addProduct(product, { through: { quantity: newQuantity } })
+    // }
+    // const productFind = await Product.findAll({
+    //     where: {
+    //         id: productId
+    //     }
+    // })
+    // await fetchedCart.addProduct(productFind[0], { through: { quantity: newQuantity } })
+    res.redirect('/cart')
+}
 //
 // exports.deleteCartProduct = async (req, res, next) => {
 //     const { productId } = req.params
