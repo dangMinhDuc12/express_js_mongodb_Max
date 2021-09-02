@@ -21,8 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // Taọ middleware để mọi request tương ứng với user hiện tại
 app.use(async (req, res, next) => {
-    const userFind = await User.findById('612e13dcff73b1aae3ccfbf9')
-    req.user = new User(userFind.name, userFind.email, userFind.cart, userFind._id)
+    const userFind = await User.findById('6130508aa48d0a4812e23843')
+    req.user = new User(userFind.username, userFind.email, userFind.cart, userFind._id)
     next()
 })
 
